@@ -16,6 +16,6 @@ public class User extends AbstractIdModel {
     @NoSpaces(message = "логин не может содержать пробелы")
     private String login;
     private String name;
-    @Past(message = "дата рождения не может быть в будущем")
+    @PastOrPresent(message = "дата рождения не может быть в будущем")
     private LocalDate birthday;
 }
