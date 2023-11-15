@@ -44,47 +44,31 @@ public class UserControllerTest {
     @DirtiesContext(methodMode = MethodMode.BEFORE_METHOD)
     public void testCreateWhenUserIsValidThenReturnOkRequest() throws Exception {
         user.setId(1);
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(user)));
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(user)));
     }
 
     @Test
     public void testCreateWhenUserIsNotValidThenReturnBadRequest_Email() throws Exception {
         user.setEmail("invalid email");
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isBadRequest());
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isBadRequest());
     }
 
     @Test
     public void testCreateWhenUserIsNotValidThenReturnBadRequest_EmptyLogin() throws Exception {
         user.setLogin("");
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isBadRequest());
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isBadRequest());
     }
 
     @Test
     public void testCreateWhenUserIsNotValidThenReturnBadRequest_LoginWithSpaces() throws Exception {
         user.setLogin("lo gin");
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isBadRequest());
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isBadRequest());
     }
 
     @Test
     public void testCreateWhenUserIsNotValidThenReturnBadRequest_BirthDateInFuture() throws Exception {
         user.setBirthday(LocalDate.now().plusDays(1));
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isBadRequest());
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -98,11 +82,7 @@ public class UserControllerTest {
         resultUser.setBirthday(LocalDate.now());
 
         user.setName(null);
-        mvc.perform(post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(resultUser)));
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(resultUser)));
     }
 
     @Test
@@ -114,9 +94,7 @@ public class UserControllerTest {
         user1.setName("Test");
         user1.setBirthday(LocalDate.now());
 
-        mvc.perform(post(URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user1)));
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user1)));
 
         User user2 = new User();
         user2.setEmail("test2@test.com");
@@ -124,17 +102,13 @@ public class UserControllerTest {
         user2.setName("Test2");
         user2.setBirthday(LocalDate.now().minusDays(1));
 
-        mvc.perform(post(URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user2)));
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user2)));
 
         user1.setId(1);
         user2.setId(2);
         List<User> users = Arrays.asList(user1, user2);
 
-        mvc.perform(get(URL))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(users)));
+        mvc.perform(get(URL)).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(users)));
     }
 
     @Test
@@ -146,28 +120,19 @@ public class UserControllerTest {
         user1.setName("Test");
         user1.setBirthday(LocalDate.now());
 
-        mvc.perform(post(URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user1)));
+        mvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user1)));
 
         user1.setId(1);
         user1.setEmail("test@test123.com");
         user1.setLogin("test123");
         user1.setName("Test123");
 
-        mvc.perform(put(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user1)))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(user1)));
+        mvc.perform(put(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user1))).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(user1)));
     }
 
     @Test
     public void testPutWhenUserDoesNotExistThenReturnServerError() throws Exception {
         user.setId(777);
-        mvc.perform(put(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().is5xxServerError());
+        mvc.perform(put(URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user))).andExpect(status().is5xxServerError());
     }
 }
