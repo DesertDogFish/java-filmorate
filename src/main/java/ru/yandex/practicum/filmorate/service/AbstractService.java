@@ -8,10 +8,12 @@ import ru.yandex.practicum.filmorate.storage.Storage;
 
 import java.util.Collection;
 
+import static ru.yandex.practicum.filmorate.service.Message.NOT_FOUND_MESSAGE;
+
 @Service
 @Slf4j
 public abstract class AbstractService<M extends AbstractIdModel> {
-    private final String NOT_FOUND_MESSAGE = "Неверный идентификатор";
+
     protected Storage storage;
     private int counter = 1;
 

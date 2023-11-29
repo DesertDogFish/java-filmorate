@@ -12,12 +12,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.yandex.practicum.filmorate.service.Message.FILM_NOT_FOUND_MESSAGE;
+import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSAGE;
+
 @Slf4j
 @Service
 public class FilmService extends AbstractService<Film> {
-
-    private final String FILM_NOT_FOUND_MESSAGE = "Фильм не найден";
-    private final String USER_NOT_FOUND_MESSAGE = "Пользователь не найден";
 
     private final FilmStorage storage;
     private final UserStorage userStorage;

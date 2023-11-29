@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSAGE;
+
 @Slf4j
 @Service
 public class UserService extends AbstractService<User> {
 
-    private final String USER_NOT_FOUND_MESSAGE = "Пользователь не найден";
 
     private final UserStorage storage;
 
