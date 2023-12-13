@@ -5,12 +5,16 @@ import lombok.EqualsAndHashCode;
 import ru.yandex.practicum.filmorate.validation.MaxLength;
 import ru.yandex.practicum.filmorate.validation.OlderThan;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Film extends AbstractIdModel {
+    private final Set<Integer> likes = new HashSet<>();
     @NotEmpty(message = "название не может быть пустым")
     private String name;
     @MaxLength(value = 200, message = "максимальная длина описания — 200 символов")
