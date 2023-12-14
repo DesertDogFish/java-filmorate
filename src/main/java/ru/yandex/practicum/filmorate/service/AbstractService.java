@@ -15,7 +15,7 @@ import static ru.yandex.practicum.filmorate.service.Message.NOT_FOUND_MESSAGE;
 public abstract class AbstractService<M extends AbstractIdModel> {
 
     protected Storage storage;
-    private int counter = 1;
+    protected int counter = 1;
 
     protected void setStorage(Storage storage) {
         this.storage = storage;

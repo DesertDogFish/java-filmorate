@@ -39,7 +39,7 @@ public class UserService extends AbstractService<User> {
         User friend = (User) storage.get(friendId);
         if (user != null && friend != null) {
             user.getFriends().add(friendId);
-            friend.getFriends().add(id);
+            //friend.getFriends().add(id); TODO
         } else {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);
@@ -53,7 +53,7 @@ public class UserService extends AbstractService<User> {
         User friend = (User) storage.get(friendId);
         if (user != null && friend != null) {
             user.getFriends().remove(friendId);
-            friend.getFriends().remove(id);
+            //friend.getFriends().remove(id); TODO
         } else {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);

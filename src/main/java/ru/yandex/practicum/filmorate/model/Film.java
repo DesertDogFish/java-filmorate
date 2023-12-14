@@ -14,7 +14,6 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Film extends AbstractIdModel {
-    private final Set<Integer> likes = new HashSet<>();
     @NotEmpty(message = "название не может быть пустым")
     private String name;
     @MaxLength(value = 200, message = "максимальная длина описания — 200 символов")
@@ -23,4 +22,7 @@ public class Film extends AbstractIdModel {
     private LocalDate releaseDate;
     @Positive(message = "продолжительность фильма должна быть положительной")
     private int duration;
+    private final Set<Integer> likes = new HashSet<>();
+    private MPARating mpa;
+    private final Set<Genre> genres = new HashSet<>();
 }
