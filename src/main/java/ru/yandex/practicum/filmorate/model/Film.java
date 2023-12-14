@@ -2,6 +2,8 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ru.yandex.practicum.filmorate.validation.MaxLength;
 import ru.yandex.practicum.filmorate.validation.OlderThan;
 
@@ -12,6 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@SuperBuilder
+@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Film extends AbstractIdModel {
     @NotEmpty(message = "название не может быть пустым")
@@ -22,7 +26,7 @@ public class Film extends AbstractIdModel {
     private LocalDate releaseDate;
     @Positive(message = "продолжительность фильма должна быть положительной")
     private int duration;
-    private final Set<Integer> likes = new HashSet<>();
+    private Set<Integer> likes = new HashSet<>();
     private MPARating mpa;
-    private final Set<Genre> genres = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
 }

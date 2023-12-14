@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
+import ru.yandex.practicum.filmorate.dao.UserDao;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,18 +19,18 @@ import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSA
 @Service
 public class UserService extends AbstractService<User> {
 
+    private final UserDao storage;
 
-    private final UserStorage storage;
-
-    public UserService(@Qualifier("userStorage") UserStorage storage) {
+    public UserService(@Qualifier("userDbStorage") UserDao storage) {
         setStorage(storage);
         this.storage = storage;
     }
 
     @Override
-    protected void setFields(User user) {
+    protected User enrichFields(User user) {
         if (user.getName() == null || user.getName().isBlank() || user.getName().isEmpty())
             user.setName(user.getLogin());
+        return user;
     }
 
     public User addFriend(int id, int friendId) {
@@ -39,11 +39,11 @@ public class UserService extends AbstractService<User> {
         User friend = (User) storage.get(friendId);
         if (user != null && friend != null) {
             user.getFriends().add(friendId);
-            //friend.getFriends().add(id); TODO
         } else {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);
         }
+        storage.put(user.getId(), user);
         return user;
     }
 
@@ -53,11 +53,11 @@ public class UserService extends AbstractService<User> {
         User friend = (User) storage.get(friendId);
         if (user != null && friend != null) {
             user.getFriends().remove(friendId);
-            //friend.getFriends().remove(id); TODO
         } else {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);
         }
+        storage.put(user.getId(), user);
         return user;
     }
 

@@ -1,11 +1,12 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.dao.inmemoryimpl;
 
+import ru.yandex.practicum.filmorate.dao.BasicDao;
 import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryAbstractStorage<M extends AbstractIdModel> implements FilmStorage {
+public class AbstractBasicDaoInMemoryImpl<M extends AbstractIdModel> implements BasicDao {
     protected final Map<Integer, M> data = new HashMap<>();
 
     @Override

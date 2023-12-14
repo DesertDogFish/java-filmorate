@@ -2,6 +2,8 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ru.yandex.practicum.filmorate.validation.NoSpaces;
 
 import javax.validation.constraints.Email;
@@ -12,9 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@SuperBuilder
+@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractIdModel {
-    private final Set<Integer> friends = new HashSet<>();
     @Email(message = "электронная почта не может быть пустой и должна содержать символ @")
     private String email;
     @NotEmpty(message = "логин не может быть пустым")
@@ -23,4 +26,5 @@ public class User extends AbstractIdModel {
     private String name;
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private LocalDate birthday;
+    private Set<Integer> friends = new HashSet<>();
 }

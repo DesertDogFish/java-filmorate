@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.MPARating;
-import ru.yandex.practicum.filmorate.storage.MPAStorage;
+import ru.yandex.practicum.filmorate.dao.MPARatingDao;
 
 import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSAGE;
 
@@ -13,12 +13,11 @@ import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSA
 @Service
 public class MPAService extends AbstractService<MPARating> {
 
+    private final MPARatingDao dao;
 
-    private final MPAStorage storage;
-
-    public MPAService(@Qualifier("mpaStorage") MPAStorage storage) {
-        setStorage(storage);
-        this.storage = storage;
+    public MPAService(@Qualifier("mpaDbStorage") MPARatingDao dao) {
+        setStorage(dao);
+        this.dao = dao;
     }
 
     @Override

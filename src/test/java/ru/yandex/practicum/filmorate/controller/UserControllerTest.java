@@ -106,7 +106,7 @@ public class UserControllerTest {
         user2.setId(2);
         List<User> users = Arrays.asList(user1, user2);
 
-        Mockito.when(userService.findAll()).thenReturn(users);
+        Mockito.when(userService.get()).thenReturn(users);
 
         mvc.perform(get(URL)).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(users)));
     }

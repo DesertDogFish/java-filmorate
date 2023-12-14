@@ -1,12 +1,13 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.dao.inmemoryimpl;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.dao.MPARatingDao;
 import ru.yandex.practicum.filmorate.model.MPARating;
 
 @Component("mpaStorage")
-public class InMemoryMPAStorage extends InMemoryAbstractStorage<MPARating> implements MPAStorage {
+public class MPARatingDaoInMemoryImpl extends AbstractBasicDaoInMemoryImpl<MPARating> implements MPARatingDao {
 
-    public InMemoryMPAStorage() {
+    public MPARatingDaoInMemoryImpl() {
         data.put(1, new MPARating(1, "G"));
         data.put(2, new MPARating(2, "PG"));
         data.put(3, new MPARating(3, "PG-13"));

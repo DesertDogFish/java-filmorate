@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.storage.GenreStorage;
+import ru.yandex.practicum.filmorate.dao.GenreDao;
 
 import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSAGE;
 
@@ -13,10 +13,9 @@ import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSA
 @Service
 public class GenreService extends AbstractService<Genre> {
 
+    private final GenreDao storage;
 
-    private final GenreStorage storage;
-
-    public GenreService(@Qualifier("genreStorage") GenreStorage storage) {
+    public GenreService(@Qualifier("genreDbStorage") GenreDao storage) {
         setStorage(storage);
         this.storage = storage;
     }

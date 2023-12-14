@@ -21,7 +21,7 @@ public abstract class AbstractController<M extends AbstractIdModel> {
 
     @GetMapping
     public Collection<M> findAll() {
-        return service.findAll();
+        return service.get();
     }
 
     @PostMapping
