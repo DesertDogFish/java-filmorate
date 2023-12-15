@@ -30,7 +30,7 @@ public class FilmService extends AbstractService<Film> {
                        @Qualifier("userDbStorage") UserDao userDao,
                        @Qualifier("mpaDbStorage") MPARatingDao mpaRatingDao,
                        @Qualifier("genreDbStorage") GenreDao genreDao) {
-        setDao(filmDao);
+        super(filmDao);
         this.filmDao = filmDao;
         this.userDao = userDao;
         this.mpaRatingDao = mpaRatingDao;
@@ -65,7 +65,7 @@ public class FilmService extends AbstractService<Film> {
             log.warn(FILM_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(FILM_NOT_FOUND_MESSAGE);
         }
-        filmDao.put(film.getId(), film);
+        filmDao.merge(film);
         log.debug("Добавлен лайк для: {}", film);
         return enrichFields(film);
     }
@@ -82,7 +82,7 @@ public class FilmService extends AbstractService<Film> {
             log.warn(FILM_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(FILM_NOT_FOUND_MESSAGE);
         }
-        filmDao.put(film.getId(), film);
+        filmDao.merge(film);
         log.debug("Удален лайк для: {}", film);
         return enrichFields(film);
     }

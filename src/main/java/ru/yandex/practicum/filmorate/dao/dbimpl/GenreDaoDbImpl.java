@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.dao.dbimpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -13,9 +12,8 @@ import java.util.List;
 
 @Component("genreDbStorage")
 @Repository
-public class GenreDaoDbImpl extends BasicDaoDbImpl<Genre> implements GenreDao {
+public class GenreDaoDbImpl extends AbstractDaoDbImpl<Genre> implements GenreDao {
 
-    @Autowired
     public GenreDaoDbImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
         flushCache();

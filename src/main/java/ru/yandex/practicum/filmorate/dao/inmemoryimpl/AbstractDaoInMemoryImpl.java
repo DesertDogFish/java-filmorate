@@ -6,8 +6,9 @@ import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractBasicDaoInMemoryImpl<M extends AbstractIdModel> implements BasicDao<M> {
+public abstract class AbstractDaoInMemoryImpl<M extends AbstractIdModel> implements BasicDao<M> {
     protected final Map<Integer, M> data = new HashMap<>();
+    protected int counter = 1;
 
     @Override
     public M get(int id) {
@@ -20,8 +21,11 @@ public class AbstractBasicDaoInMemoryImpl<M extends AbstractIdModel> implements 
     }
 
     @Override
-    public void put(int id, M value) {
-        data.put(id, value);
+    public M merge(M value) {
+        if (value.getId() == 0)
+            value.setId(counter++);
+        data.put(value.getId(), value);
+        return value;
     }
 
     @Override

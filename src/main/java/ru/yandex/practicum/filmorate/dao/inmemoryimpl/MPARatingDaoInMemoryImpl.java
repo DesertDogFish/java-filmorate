@@ -5,7 +5,7 @@ import ru.yandex.practicum.filmorate.dao.MPARatingDao;
 import ru.yandex.practicum.filmorate.model.MPARating;
 
 @Component("mpaStorage")
-public class MPARatingDaoInMemoryImpl extends AbstractBasicDaoInMemoryImpl<MPARating> implements MPARatingDao {
+public class MPARatingDaoInMemoryImpl extends AbstractDaoInMemoryImpl<MPARating> implements MPARatingDao {
 
     public MPARatingDaoInMemoryImpl() {
         data.put(1, new MPARating(1, "G"));

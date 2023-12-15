@@ -14,7 +14,7 @@ import static ru.yandex.practicum.filmorate.service.Message.UACCEPTED_METHOD_MES
 public class MPAService extends AbstractService<MPARating> {
 
     public MPAService(@Qualifier("mpaDbStorage") MPARatingDao mpaRatingDao) {
-        setDao(mpaRatingDao);
+        super(mpaRatingDao);
     }
 
     @Override

@@ -9,7 +9,7 @@ public interface BasicDao<M extends AbstractIdModel> {
 
     M get(int id);
 
-    void put(int id, M value);
+    M merge(M value);
 
     void remove(int id);
 }

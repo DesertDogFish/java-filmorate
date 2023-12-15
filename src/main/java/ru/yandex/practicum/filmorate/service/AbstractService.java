@@ -16,9 +16,8 @@ import static ru.yandex.practicum.filmorate.service.Message.NOT_FOUND_MESSAGE;
 public abstract class AbstractService<M extends AbstractIdModel> {
 
     protected BasicDao<M> dao;
-    protected int counter = 1;
 
-    protected void setDao(BasicDao<M> dao) {
+    protected AbstractService(BasicDao<M> dao) {
         this.dao = dao;
     }
 
@@ -38,9 +37,9 @@ public abstract class AbstractService<M extends AbstractIdModel> {
     }
 
     public M create(M body) {
+        body.setId(0);
         log.debug("Добавляем: {}", body);
-        body.setId(counter++);
-        dao.put(body.getId(), enrichFields(body));
+        dao.merge(enrichFields(body));
         log.debug("Добавлено: {}", body);
         return body;
     }
@@ -51,7 +50,7 @@ public abstract class AbstractService<M extends AbstractIdModel> {
             log.warn(NOT_FOUND_MESSAGE);
             throw new ValidationException(NOT_FOUND_MESSAGE);
         }
-        dao.put(body.getId(), body);
+        dao.merge(body);
         log.debug("Обновлено: {}", enrichFields(body));
         return body;
     }

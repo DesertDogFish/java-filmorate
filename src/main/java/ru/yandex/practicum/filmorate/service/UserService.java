@@ -22,7 +22,7 @@ public class UserService extends AbstractService<User> {
     private final UserDao userDao;
 
     public UserService(@Qualifier("userDbStorage") UserDao userDao) {
-        setDao(userDao);
+        super(userDao);
         this.userDao = userDao;
     }
 
@@ -43,7 +43,7 @@ public class UserService extends AbstractService<User> {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);
         }
-        userDao.put(user.getId(), user);
+        userDao.merge(user);
         return user;
     }
 
@@ -57,7 +57,7 @@ public class UserService extends AbstractService<User> {
             log.warn(USER_NOT_FOUND_MESSAGE);
             throw new FilmNotFoundException(USER_NOT_FOUND_MESSAGE);
         }
-        userDao.put(user.getId(), user);
+        userDao.merge(user);
         return user;
     }
 

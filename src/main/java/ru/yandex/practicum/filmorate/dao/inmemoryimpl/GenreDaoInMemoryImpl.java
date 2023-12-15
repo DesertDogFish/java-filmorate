@@ -5,7 +5,7 @@ import ru.yandex.practicum.filmorate.dao.GenreDao;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 @Component("genreStorage")
-public class GenreDaoInMemoryImpl extends AbstractBasicDaoInMemoryImpl<Genre> implements GenreDao {
+public class GenreDaoInMemoryImpl extends AbstractDaoInMemoryImpl<Genre> implements GenreDao {
 
     public GenreDaoInMemoryImpl() {
         data.put(1, new Genre(1, "Комедия"));

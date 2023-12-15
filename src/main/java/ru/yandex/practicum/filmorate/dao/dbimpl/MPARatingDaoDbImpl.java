@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.dao.dbimpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -13,9 +12,8 @@ import java.util.List;
 
 @Component("mpaDbStorage")
 @Repository
-public class MPARatingDaoDbImpl extends BasicDaoDbImpl<MPARating> implements MPARatingDao {
+public class MPARatingDaoDbImpl extends AbstractDaoDbImpl<MPARating> implements MPARatingDao {
 
-    @Autowired
     public MPARatingDaoDbImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
         flushCache();

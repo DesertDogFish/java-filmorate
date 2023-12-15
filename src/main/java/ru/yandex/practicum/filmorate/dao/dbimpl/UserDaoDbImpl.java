@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.dao.dbimpl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.dao.UserDao;
 import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
-import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.sql.PreparedStatement;
@@ -23,9 +21,8 @@ import static ru.yandex.practicum.filmorate.service.Message.USER_NOT_FOUND_MESSA
 @Component("userDbStorage")
 @Repository
 @Slf4j
-public class UserDaoDbImpl extends BasicDaoDbImpl<User> implements UserDao {
+public class UserDaoDbImpl extends AbstractDaoDbImpl<User> implements UserDao {
 
-    @Autowired
     public UserDaoDbImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
@@ -57,29 +54,48 @@ public class UserDaoDbImpl extends BasicDaoDbImpl<User> implements UserDao {
     }
 
     @Override
-    public void put(int id, User value) {
-        User user = (User) value;
-        log.debug("Создаем/изменяем юзера в БД по id {} : {}", id, user);
-        int userId = mergeUser(user);
+    public User merge(User user) {
+        int userId = user.getId();
+        if (userId == 0) {
+            log.debug("Создаем юзера в БД по id {} : {}", user.getId(), user);
+            userId = insertUser(user);
+        }
+        else {
+            log.debug("Изменяем юзера в БД по id {} : {}", user.getId(), user);
+            updateUser(user);
+        }
         user.setId(userId);
         deleteFriends(user);
         insertFriends(user);
-        log.debug("Создано/изменено в БД по id {} : {}", id, user);
+        log.debug("Создано/изменено в БД по id {} : {}", user.getId(), user);
+        return user;
     }
 
-    private int mergeUser(User user) {
-        String sqlQuery = "MERGE INTO users (id, email, login, name, birthday) KEY(id) VALUES (?,?,?,?,?)";
+    private int insertUser(User user) {
+        String sqlQuery = "INSERT INTO users (email, login, name, birthday) VALUES (?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"id"});
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getLogin());
+            stmt.setString(3, user.getName());
+            stmt.setDate(4, java.sql.Date.valueOf(user.getBirthday()));
+            return stmt;
+        }, keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    private void updateUser(User user) {
+        String sqlQuery = "MERGE INTO users (id, email, login, name, birthday) KEY(id) VALUES (?,?,?,?,?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             stmt.setInt(1, user.getId());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getLogin());
             stmt.setString(4, user.getName());
             stmt.setDate(5, java.sql.Date.valueOf(user.getBirthday()));
             return stmt;
-        }, keyHolder);
-        return keyHolder.getKey().intValue();
+        });
     }
 
     private void deleteFriends(User user) {

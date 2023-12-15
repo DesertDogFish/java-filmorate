@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.dao.dbimpl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -24,9 +23,8 @@ import static ru.yandex.practicum.filmorate.service.Message.FILM_NOT_FOUND_MESSA
 @Component("filmDbStorage")
 @Repository
 @Slf4j
-public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
+public class FilmDaoDbImpl extends AbstractDaoDbImpl<Film> implements FilmDao {
 
-    @Autowired
     public FilmDaoDbImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
@@ -58,23 +56,44 @@ public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
     }
 
     @Override
-    public void put(int id, Film value) {
-        Film film = (Film) value;
-        log.debug("Создаем/изменяем фильм в БД по id {} : {}", id, film);
-        int filmId = mergeFilm(film);
+    public Film merge(Film film) {
+        int filmId = film.getId();
+        if (filmId == 0) {
+            log.debug("Создаем фильм в БД по id {} : {}", film.getId(), film);
+            filmId = insertFilm(film);
+        }
+        else {
+            log.debug("Изменяем фильм в БД по id {} : {}", film.getId(), film);
+            updateFilm(film);
+        }
         film.setId(filmId);
         deleteFilmGenres(film);
         insertFilmGenres(film);
         deleteFilmLikes(film);
         insertFilmLikes(film);
-        log.debug("Создано/изменено в БД по id {} : {}", id, film);
+        log.debug("Создано/изменено в БД по id {} : {}", film.getId(), film);
+        return film;
     }
 
-    private int mergeFilm(Film film) {
-        String sqlQuery = "MERGE INTO films (id, name, description, release_date, duration, rating_id) KEY(id) VALUES (?,?,?,?,?,?)";
+    private int insertFilm(Film film) {
+        String sqlQuery = "INSERT INTO films (name, description, release_date, duration, rating_id) VALUES (?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"id"});
+            stmt.setString(1, film.getName());
+            stmt.setString(2, film.getDescription());
+            stmt.setDate(3, java.sql.Date.valueOf(film.getReleaseDate()));
+            stmt.setInt(4, film.getDuration());
+            stmt.setInt(5, film.getMpa().getId());
+            return stmt;
+        }, keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    private void updateFilm(Film film) {
+        String sqlQuery = "MERGE INTO films (id, name, description, release_date, duration, rating_id) KEY(id) VALUES (?,?,?,?,?,?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sqlQuery);
             stmt.setInt(1, film.getId());
             stmt.setString(2, film.getName());
             stmt.setString(3, film.getDescription());
@@ -82,8 +101,7 @@ public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
             stmt.setInt(5, film.getDuration());
             stmt.setInt(6, film.getMpa().getId());
             return stmt;
-        }, keyHolder);
-        return keyHolder.getKey().intValue();
+        });
     }
 
     private void deleteFilmGenres(Film film) {

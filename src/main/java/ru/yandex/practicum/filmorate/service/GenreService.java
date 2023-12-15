@@ -14,7 +14,7 @@ import static ru.yandex.practicum.filmorate.service.Message.UACCEPTED_METHOD_MES
 public class GenreService extends AbstractService<Genre> {
 
     public GenreService(@Qualifier("genreDbStorage") GenreDao genreDao) {
-        setDao(genreDao);
+        super(genreDao);
     }
 
     @Override
