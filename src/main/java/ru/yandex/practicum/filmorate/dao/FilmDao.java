@@ -1,4 +1,6 @@
 package ru.yandex.practicum.filmorate.dao;
 
-public interface FilmDao extends BasicDao {
+import ru.yandex.practicum.filmorate.model.Film;
+
+public interface FilmDao extends BasicDao<Film> {
 }

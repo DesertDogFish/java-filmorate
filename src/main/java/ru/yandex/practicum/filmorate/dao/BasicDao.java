@@ -4,12 +4,12 @@ import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 
 import java.util.Map;
 
-public interface BasicDao {
-    Map<Integer, AbstractIdModel> get();
+public interface BasicDao<M extends AbstractIdModel> {
+    Map<Integer, M> get();
 
-    AbstractIdModel get(int id);
+    M get(int id);
 
-    void put(int id, AbstractIdModel value);
+    void put(int id, M value);
 
     void remove(int id);
 }

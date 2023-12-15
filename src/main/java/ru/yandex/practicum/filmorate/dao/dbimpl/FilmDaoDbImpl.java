@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.dao.FilmDao;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
-import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.MPARating;
@@ -33,11 +32,11 @@ public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
     }
 
     @Override
-    public Map<Integer, AbstractIdModel> get() {
+    public Map<Integer, Film> get() {
         log.debug("Получаем все фильмы из БД..");
         String sqlQuery = "SELECT * FROM films ORDER BY 1;";
         List<Film> films = jdbcTemplate.query(sqlQuery, this::filmRowMapper);
-        Map<Integer, AbstractIdModel> filmsMap = new HashMap<>();
+        Map<Integer, Film> filmsMap = new HashMap<>();
         for (Film film : films) {
             filmsMap.put(film.getId(), film);
         }
@@ -46,7 +45,7 @@ public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
     }
 
     @Override
-    public AbstractIdModel get(int id) {
+    public Film get(int id) {
         log.debug("Получаем фильм из БД по id: {}", id);
         String sqlQuery = "SELECT * FROM Films WHERE id = ?;";
         List<Film> films = jdbcTemplate.query(sqlQuery, this::filmRowMapper, id);
@@ -59,7 +58,7 @@ public class FilmDaoDbImpl extends BasicDaoDbImpl<Film> implements FilmDao {
     }
 
     @Override
-    public void put(int id, AbstractIdModel value) {
+    public void put(int id, Film value) {
         Film film = (Film) value;
         log.debug("Создаем/изменяем фильм в БД по id {} : {}", id, film);
         int filmId = mergeFilm(film);

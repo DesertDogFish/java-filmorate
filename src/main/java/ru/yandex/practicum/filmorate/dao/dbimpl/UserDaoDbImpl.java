@@ -31,11 +31,11 @@ public class UserDaoDbImpl extends BasicDaoDbImpl<User> implements UserDao {
     }
 
     @Override
-    public Map<Integer, AbstractIdModel> get() {
+    public Map<Integer, User> get() {
         log.debug("Получаем всех юзеров из БД..");
         String sqlQuery = "SELECT * FROM users ORDER BY 1;";
         List<User> users = jdbcTemplate.query(sqlQuery, this::userRowMapper);
-        Map<Integer, AbstractIdModel> usersMap = new HashMap<>();
+        Map<Integer, User> usersMap = new HashMap<>();
         for (User user : users) {
             usersMap.put(user.getId(), user);
         }
@@ -44,7 +44,7 @@ public class UserDaoDbImpl extends BasicDaoDbImpl<User> implements UserDao {
     }
 
     @Override
-    public AbstractIdModel get(int id) {
+    public User get(int id) {
         log.debug("Получаем юзера из БД по id: {}", id);
         String sqlQuery = "SELECT * FROM users WHERE id = ?;";
         List<User> users = jdbcTemplate.query(sqlQuery, this::userRowMapper, id);
@@ -57,7 +57,7 @@ public class UserDaoDbImpl extends BasicDaoDbImpl<User> implements UserDao {
     }
 
     @Override
-    public void put(int id, AbstractIdModel value) {
+    public void put(int id, User value) {
         User user = (User) value;
         log.debug("Создаем/изменяем юзера в БД по id {} : {}", id, user);
         int userId = mergeUser(user);

@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate.dao;
 
-public interface UserDao extends BasicDao {
+import ru.yandex.practicum.filmorate.model.User;
+
+public interface UserDao extends BasicDao<User> {
 
 }

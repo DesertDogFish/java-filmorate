@@ -6,22 +6,22 @@ import ru.yandex.practicum.filmorate.model.AbstractIdModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractBasicDaoInMemoryImpl<M extends AbstractIdModel> implements BasicDao {
+public class AbstractBasicDaoInMemoryImpl<M extends AbstractIdModel> implements BasicDao<M> {
     protected final Map<Integer, M> data = new HashMap<>();
 
     @Override
-    public AbstractIdModel get(int id) {
+    public M get(int id) {
         return data.get(id);
     }
 
     @Override
-    public Map<Integer, AbstractIdModel> get() {
-        return (Map<Integer, AbstractIdModel>) data;
+    public Map<Integer, M> get() {
+        return data;
     }
 
     @Override
-    public void put(int id, AbstractIdModel value) {
-        data.put(id, (M) value);
+    public void put(int id, M value) {
+        data.put(id, value);
     }
 
     @Override

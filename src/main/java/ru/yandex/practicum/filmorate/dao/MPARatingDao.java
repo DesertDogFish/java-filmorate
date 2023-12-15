@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate.dao;
 
-public interface MPARatingDao extends BasicDao {
+import ru.yandex.practicum.filmorate.model.MPARating;
+
+public interface MPARatingDao extends BasicDao<MPARating> {
 
 }

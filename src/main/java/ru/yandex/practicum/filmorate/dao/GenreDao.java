@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate.dao;
 
-public interface GenreDao extends BasicDao {
+import ru.yandex.practicum.filmorate.model.Genre;
+
+public interface GenreDao extends BasicDao<Genre> {
 
 }
