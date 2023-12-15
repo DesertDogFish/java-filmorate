@@ -59,8 +59,7 @@ public class UserDaoDbImpl extends AbstractDaoDbImpl<User> implements UserDao {
         if (userId == 0) {
             log.debug("Создаем юзера в БД по id {} : {}", user.getId(), user);
             userId = insertUser(user);
-        }
-        else {
+        } else {
             log.debug("Изменяем юзера в БД по id {} : {}", user.getId(), user);
             updateUser(user);
         }
@@ -125,14 +124,7 @@ public class UserDaoDbImpl extends AbstractDaoDbImpl<User> implements UserDao {
     }
 
     private User userRowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return User.builder()
-                .id(resultSet.getInt("id"))
-                .email(resultSet.getString("email"))
-                .login(resultSet.getString("login"))
-                .name(resultSet.getString("name"))
-                .birthday(resultSet.getDate("birthday").toLocalDate())
-                .friends(getFriends(resultSet.getInt("id")))
-                .build();
+        return User.builder().id(resultSet.getInt("id")).email(resultSet.getString("email")).login(resultSet.getString("login")).name(resultSet.getString("name")).birthday(resultSet.getDate("birthday").toLocalDate()).friends(getFriends(resultSet.getInt("id"))).build();
     }
 
     private Set<Integer> getFriends(int id) {

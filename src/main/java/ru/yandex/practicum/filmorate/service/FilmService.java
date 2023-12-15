@@ -26,10 +26,7 @@ public class FilmService extends AbstractService<Film> {
     private final MPARatingDao mpaRatingDao;
     private final GenreDao genreDao;
 
-    public FilmService(@Qualifier("filmDbStorage") FilmDao filmDao,
-                       @Qualifier("userDbStorage") UserDao userDao,
-                       @Qualifier("mpaDbStorage") MPARatingDao mpaRatingDao,
-                       @Qualifier("genreDbStorage") GenreDao genreDao) {
+    public FilmService(@Qualifier("filmDbStorage") FilmDao filmDao, @Qualifier("userDbStorage") UserDao userDao, @Qualifier("mpaDbStorage") MPARatingDao mpaRatingDao, @Qualifier("genreDbStorage") GenreDao genreDao) {
         super(filmDao);
         this.filmDao = filmDao;
         this.userDao = userDao;
@@ -45,9 +42,7 @@ public class FilmService extends AbstractService<Film> {
         for (Genre genre : body.getGenres())
             genresEnriched.add(genreDao.get(genre.getId()));
         body.getGenres().removeAll(body.getGenres());
-        genresEnriched = genresEnriched.stream()
-                .sorted(Comparator.comparing(Genre::getId))
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+        genresEnriched = genresEnriched.stream().sorted(Comparator.comparing(Genre::getId)).collect(Collectors.toCollection(LinkedHashSet::new));
         body.getGenres().addAll(genresEnriched);
         log.debug("После добавления значений MPA и Genre: {}", body);
         return body;
@@ -89,11 +84,7 @@ public class FilmService extends AbstractService<Film> {
 
     public List<Film> getTop(int count) {
         log.debug("Получаем топ {} лучших фильмов", count);
-        List<Film> films = filmDao.get().values().stream()
-                .map(this::enrichFields)
-                .sorted(Comparator.comparingInt((Film film) -> (film).getLikes().size()).reversed())
-                .limit(count)
-                .collect(Collectors.toList());
+        List<Film> films = filmDao.get().values().stream().map(this::enrichFields).sorted(Comparator.comparingInt((Film film) -> (film).getLikes().size()).reversed()).limit(count).collect(Collectors.toList());
         log.debug("Топ лучших фильмов {} ", films);
         return films;
     }

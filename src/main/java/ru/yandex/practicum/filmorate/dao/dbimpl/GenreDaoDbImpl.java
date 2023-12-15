@@ -21,7 +21,7 @@ public class GenreDaoDbImpl extends AbstractDaoDbImpl<Genre> implements GenreDao
 
     public void flushCache() {
         String sqlQuery = "SELECT ID, NAME FROM GENRES ORDER BY 1;";
-        List<Genre> genres =  jdbcTemplate.query(sqlQuery, this::rowMapper);
+        List<Genre> genres = jdbcTemplate.query(sqlQuery, this::rowMapper);
         data.clear();
         for (Genre genre : genres) {
             data.put(genre.getId(), genre);
@@ -29,9 +29,6 @@ public class GenreDaoDbImpl extends AbstractDaoDbImpl<Genre> implements GenreDao
     }
 
     private Genre rowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return Genre.builder()
-                .id(resultSet.getInt("id"))
-                .name(resultSet.getString("name"))
-                .build();
+        return Genre.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
     }
 }

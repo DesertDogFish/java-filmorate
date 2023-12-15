@@ -22,8 +22,7 @@ public abstract class AbstractDaoInMemoryImpl<M extends AbstractIdModel> impleme
 
     @Override
     public M merge(M value) {
-        if (value.getId() == 0)
-            value.setId(counter++);
+        if (value.getId() == 0) value.setId(counter++);
         data.put(value.getId(), value);
         return value;
     }

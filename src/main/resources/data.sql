@@ -1,9 +1,3 @@
-delete from users;
-delete from films;
-
-alter table users alter column id restart with 1;
-alter table films alter column id restart with 1;
-
 merge into ratings_mpa (id, name)
     values (1, 'G'),
            (2, 'PG'),

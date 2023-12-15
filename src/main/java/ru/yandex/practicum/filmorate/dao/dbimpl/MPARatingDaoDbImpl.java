@@ -21,7 +21,7 @@ public class MPARatingDaoDbImpl extends AbstractDaoDbImpl<MPARating> implements 
 
     public void flushCache() {
         String sqlQuery = "SELECT ID, NAME FROM RATINGS_MPA ORDER BY 1;";
-        List<MPARating> mpaRatings =  jdbcTemplate.query(sqlQuery, this::rowMapper);
+        List<MPARating> mpaRatings = jdbcTemplate.query(sqlQuery, this::rowMapper);
         data.clear();
         for (MPARating mpaRating : mpaRatings) {
             data.put(mpaRating.getId(), mpaRating);
@@ -29,9 +29,6 @@ public class MPARatingDaoDbImpl extends AbstractDaoDbImpl<MPARating> implements 
     }
 
     private MPARating rowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return MPARating.builder()
-                .id(resultSet.getInt("id"))
-                .name(resultSet.getString("name"))
-                .build();
+        return MPARating.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
     }
 }

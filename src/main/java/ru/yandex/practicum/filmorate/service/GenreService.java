@@ -7,7 +7,7 @@ import ru.yandex.practicum.filmorate.exception.UnacceptedMethodException;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.dao.GenreDao;
 
-import static ru.yandex.practicum.filmorate.service.Message.UACCEPTED_METHOD_MESSAGE;
+import static ru.yandex.practicum.filmorate.service.Message.UNACCEPTED_METHOD_MESSAGE;
 
 @Slf4j
 @Service
@@ -19,13 +19,13 @@ public class GenreService extends AbstractService<Genre> {
 
     @Override
     public Genre create(Genre body) {
-        log.warn(UACCEPTED_METHOD_MESSAGE);
+        log.warn(UNACCEPTED_METHOD_MESSAGE);
         throw new UnacceptedMethodException("create");
     }
 
     @Override
     public Genre put(Genre body) {
-        log.warn(UACCEPTED_METHOD_MESSAGE);
+        log.warn(UNACCEPTED_METHOD_MESSAGE);
         throw new UnacceptedMethodException("create");
     }
 }

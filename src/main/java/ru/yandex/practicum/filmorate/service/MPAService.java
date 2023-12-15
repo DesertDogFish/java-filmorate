@@ -7,7 +7,7 @@ import ru.yandex.practicum.filmorate.exception.UnacceptedMethodException;
 import ru.yandex.practicum.filmorate.model.MPARating;
 import ru.yandex.practicum.filmorate.dao.MPARatingDao;
 
-import static ru.yandex.practicum.filmorate.service.Message.UACCEPTED_METHOD_MESSAGE;
+import static ru.yandex.practicum.filmorate.service.Message.UNACCEPTED_METHOD_MESSAGE;
 
 @Slf4j
 @Service
@@ -19,13 +19,13 @@ public class MPAService extends AbstractService<MPARating> {
 
     @Override
     public MPARating create(MPARating body) {
-        log.warn(UACCEPTED_METHOD_MESSAGE);
+        log.warn(UNACCEPTED_METHOD_MESSAGE);
         throw new UnacceptedMethodException("create");
     }
 
     @Override
     public MPARating put(MPARating body) {
-        log.warn(UACCEPTED_METHOD_MESSAGE);
+        log.warn(UNACCEPTED_METHOD_MESSAGE);
         throw new UnacceptedMethodException("put");
     }
 }
