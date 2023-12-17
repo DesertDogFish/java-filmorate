@@ -29,6 +29,9 @@ public class MPARatingDaoDbImpl extends AbstractDaoDbImpl<MPARating> implements 
     }
 
     private MPARating rowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return MPARating.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
+        return MPARating.builder()
+                .id(resultSet.getInt("id"))
+                .name(resultSet.getString("name"))
+                .build();
     }
 }

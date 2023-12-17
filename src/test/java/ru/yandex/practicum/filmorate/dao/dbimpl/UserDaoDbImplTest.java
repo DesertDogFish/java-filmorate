@@ -24,8 +24,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class UserDaoDbImplTest {
     private final JdbcTemplate jdbcTemplate;
 
-    private final User user1 = User.builder().email("email").login("login").name("name").birthday(LocalDate.now()).friends(Set.of()).build();
-    private final User user2 = User.builder().email("email2").login("login2").name("name2").birthday(LocalDate.now().minusDays(1)).friends(Set.of(1)).build();
+    private final User user1 = User.builder()
+            .email("email")
+            .login("login")
+            .name("name")
+            .birthday(LocalDate.now())
+            .friends(Set.of())
+            .build();
+    private final User user2 = User.builder()
+            .email("email2")
+            .login("login2")
+            .name("name2")
+            .birthday(LocalDate.now().minusDays(1))
+            .friends(Set.of(1))
+            .build();
 
     private UserDaoDbImpl userDao;
 

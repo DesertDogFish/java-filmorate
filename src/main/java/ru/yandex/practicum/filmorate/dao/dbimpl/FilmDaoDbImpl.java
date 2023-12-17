@@ -159,7 +159,16 @@ public class FilmDaoDbImpl extends AbstractDaoDbImpl<Film> implements FilmDao {
     }
 
     private Film filmRowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return Film.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).description(resultSet.getString("description")).releaseDate(resultSet.getDate("release_date").toLocalDate()).duration(resultSet.getInt("duration")).mpa(new MPARating(resultSet.getInt("rating_id"), "")).genres(getGenres(resultSet.getInt("id"))).likes(getLikes(resultSet.getInt("id"))).build();
+        return Film.builder()
+                .id(resultSet.getInt("id"))
+                .name(resultSet.getString("name"))
+                .description(resultSet.getString("description"))
+                .releaseDate(resultSet.getDate("release_date").toLocalDate())
+                .duration(resultSet.getInt("duration"))
+                .mpa(new MPARating(resultSet.getInt("rating_id"), ""))
+                .genres(getGenres(resultSet.getInt("id")))
+                .likes(getLikes(resultSet.getInt("id")))
+                .build();
     }
 
     private Set<Genre> getGenres(int id) {

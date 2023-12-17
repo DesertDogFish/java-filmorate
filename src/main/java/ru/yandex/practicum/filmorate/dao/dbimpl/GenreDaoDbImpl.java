@@ -29,6 +29,9 @@ public class GenreDaoDbImpl extends AbstractDaoDbImpl<Genre> implements GenreDao
     }
 
     private Genre rowMapper(ResultSet resultSet, int rowNum) throws SQLException {
-        return Genre.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
+        return Genre.builder()
+                .id(resultSet.getInt("id"))
+                .name(resultSet.getString("name"))
+                .build();
     }
 }

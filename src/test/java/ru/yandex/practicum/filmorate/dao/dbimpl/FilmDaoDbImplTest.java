@@ -28,9 +28,47 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class FilmDaoDbImplTest {
     private final JdbcTemplate jdbcTemplate;
 
-    private final Film film1 = Film.builder().name("Test Film").description("Test Description").releaseDate(LocalDate.of(2021, 1, 1)).duration(120).mpa(MPARating.builder().id(1).name("").build()).genres(Set.of(Genre.builder().id(1).name("").build())).likes(Set.of(1)).build();
-    private final Film film2 = Film.builder().name("Test Film2").description("Test Description2").releaseDate(LocalDate.of(2022, 12, 12)).duration(180).mpa(MPARating.builder().id(2).name("").build()).genres(Set.of(Genre.builder().id(5).name("").build(), Genre.builder().id(6).name("").build())).likes(Set.of(1)).build();
-    private final User user = User.builder().email("").login("").name("").birthday(LocalDate.now()).friends(new HashSet<>()).build();
+    private final Film film1 = Film.builder()
+            .name("Test Film")
+            .description("Test Description")
+            .releaseDate(LocalDate.of(2021, 1, 1))
+            .duration(120)
+            .mpa(MPARating.builder()
+                    .id(1)
+                    .name("")
+                    .build())
+            .genres(Set.of(Genre.builder()
+                    .id(1)
+                    .name("")
+                    .build()))
+            .likes(Set.of(1))
+            .build();
+    private final Film film2 = Film.builder()
+            .name("Test Film2")
+            .description("Test Description2")
+            .releaseDate(LocalDate.of(2022, 12, 12))
+            .duration(180)
+            .mpa(MPARating.builder()
+                    .id(2)
+                    .name("")
+                    .build())
+            .genres(Set.of(Genre.builder()
+                            .id(5)
+                            .name("")
+                            .build(),
+                    Genre.builder()
+                            .id(6)
+                            .name("")
+                            .build()))
+            .likes(Set.of(1))
+            .build();
+    private final User user = User.builder()
+            .email("")
+            .login("")
+            .name("")
+            .birthday(LocalDate.now())
+            .friends(new HashSet<>())
+            .build();
 
     private FilmDaoDbImpl filmDao;
     private UserDaoDbImpl userDao;
