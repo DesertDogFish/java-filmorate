@@ -63,10 +63,10 @@ public class FilmControllerTest {
 
         Collection<Film> films = Arrays.asList(film, film2);
 
-        Mockito.when(filmService.findAll()).thenReturn(films);
+        Mockito.when(filmService.get()).thenReturn(films);
 
         mockMvc.perform(get(URL)).andExpect(status().isOk()).andExpect(content().json(objectMapper.writeValueAsString(films)));
-        Mockito.verify(filmService, Mockito.times(1)).findAll();
+        Mockito.verify(filmService, Mockito.times(1)).get();
     }
 
     @Test
